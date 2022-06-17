@@ -17,6 +17,8 @@ Using save states may break the mod, and are not recommended. If the mod is clos
 
 Enemies maintain their resistance to being stunned, so enemies that attempt to replace enemies such as King Mimics may pose a substantial threat. 
 
+In order to upgrade a weapon that requires certain enemies to be defeated, you must defeat the enemy that replaces the one that is usually required, ie clearing floor 1 of Mt. Gundor will mark Rifle Wolf as being defeated.
+
 ## Settings
 
 The executable provides several different options to not randomize, in order to keep the game balanced. By default, HP, ABS, Gilda, Attack, and Defense are not randomized. 

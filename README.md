@@ -4,7 +4,7 @@ This mod randomizes enemies in Dark Cloud 2 (USA), emulated through PCSX2. Creat
 
 ## How To Use
 
-Open Dark Cloud 2 (USA) with PCSX2. Run the executable and press begin at any point outside of a dungeon floor to begin randomizing enemies.
+Open Dark Cloud 2 (USA) with PCSX2. Run the Enemy Randomizer executable and press begin at any point outside of a dungeon floor to begin randomizing enemies.
 
 ## Information
 
@@ -43,4 +43,4 @@ If you find any bugs with this mod, create a GitHub issue or message me at Ridep
 
 
 
-# Have Fun!
+### Have Fun!

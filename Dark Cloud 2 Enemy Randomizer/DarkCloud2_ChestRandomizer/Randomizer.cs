@@ -30,6 +30,7 @@ namespace DarkCloud2_EnemyRandomizer
         static bool originalNames = true;
 
         static int currentFloorUSA = 0x21ECD638;
+        static int currentFloorAddress;
         static int currentFloor;
 
         static int currentDungeonUSA = 0x20376638;
@@ -63,17 +64,19 @@ namespace DarkCloud2_EnemyRandomizer
             enemyData = ObtainAllData();
             StoreEnemyData();
 
-            currentFloor = currentFloorUSA;
+            currentFloorAddress = currentFloorUSA;
             currentDungeon = currentDungeonUSA;
 
             Console.WriteLine("Enemy randomizer on");
             while (true)
             {
-                if (Memory.ReadByte(currentFloor) > 0)
+                if (Memory.ReadByte(currentFloorAddress) > 0)
                 {
-                    if (currentFloor != prevFloor) // New Floor
+                    //Console.WriteLine("old floor");
+                    if (Memory.ReadByte(currentFloorAddress) != prevFloor) // New Floor
                     {
                         Console.WriteLine("New floor");
+                        currentFloor = Memory.ReadByte(currentFloorAddress);
                         if (exitError ==  false)
                         {
                             RandomizeEnemies();
@@ -83,7 +86,7 @@ namespace DarkCloud2_EnemyRandomizer
                             ResetModelsAISound(enemyData);
                         }
 
-                        if (Memory.ReadByte(currentFloor) == 0)
+                        if (currentFloor == 0)
                         {
                             Console.WriteLine("Error, went out of dungeon");
                             exitError = true;
@@ -92,6 +95,7 @@ namespace DarkCloud2_EnemyRandomizer
                         {
                             exitError = false;
                         }
+
                         if (exitError == false)
                         {
                             prevFloor = currentFloor;

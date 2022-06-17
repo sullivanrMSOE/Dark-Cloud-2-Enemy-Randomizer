@@ -244,7 +244,7 @@ namespace DarkCloud2_EnemyRandomizer
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 17;
-            this.label6.Text = "Version 0.01";
+            this.label6.Text = "Version 1.00";
             // 
             // label7
             // 

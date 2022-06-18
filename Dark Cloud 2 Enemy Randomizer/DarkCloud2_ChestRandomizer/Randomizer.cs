@@ -83,7 +83,7 @@ namespace DarkCloud2_EnemyRandomizer
                             originalEnemies = false;
                             originalNames = false;
                             Thread.Sleep(5000);
-                            ResetModelsAISound(enemyData);
+                            ResetEnemies(enemyData);
                         }
 
                         if (currentFloor == 0)
@@ -440,8 +440,7 @@ namespace DarkCloud2_EnemyRandomizer
             return allEnemyData;
         }
 
-        // Resets Model, AI
-        private static void ResetModelsAISound(string enemyData)
+        private static void ResetEnemies(string enemyData)
         {
             while (Memory.ReadByte(0x2037869C) == 0)
             {
@@ -450,15 +449,17 @@ namespace DarkCloud2_EnemyRandomizer
 
             if (originalEnemies == false) // Only able to reset if the enemies have been changed
             {
-                Thread.Sleep(6000);
-                Console.WriteLine("Resetting models and AI and sound");
-                int currentAddress = 0x2033DA04;
+                Thread.Sleep(5000);
+                Console.WriteLine("Resetting enemies except names");
+                int currentAddress = 0x2033D9E0; // Beginning of all enemy data, starts with "load position"
                 for (int i = 0; i < 280; i++)
                 {
-                    string originalModelAI = enemyData.Substring(36+(i*184), 40);
-                    //Console.WriteLine("Original Model + AI + Sound: " + originalModelAI);
-                    Memory.WriteString(currentAddress, originalModelAI);
-                    currentAddress += 0x000000B8;
+                    string name = Memory.ReadString(currentAddress + 0x00000004, 32);
+
+                    Memory.WriteString(currentAddress, enemyData.Substring(0 + (i * 184), 184));
+                    currentAddress += 0x00000004;
+                    Memory.WriteString(currentAddress, name);
+                    currentAddress += 0x000000B4;
                 }
             }
             originalEnemies = true;

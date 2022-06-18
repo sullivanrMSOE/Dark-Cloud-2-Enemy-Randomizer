@@ -19,7 +19,7 @@ Enemies maintain their resistance to being stunned, so enemies that attempt repl
 
 In order to upgrade a weapon that requires certain enemies to be defeated, you must defeat the enemy that replaces the one that is usually required, ie clearing floor 1 of Mt. Gundor will mark Rifle Wolf as being defeated.
 
-There is a minor bug with taking a photo of an enemy may display a completely incorrect enemy name, the correct one, or the enemy being replaced. Unknown what's causing this. However, enemy-based scoops will work regardless, as long as the relevant enemy spawns. Note: It seems later-game scoops such as "Faintin' Bone Lord" can only be gotten once the correct chapter is reached.
+There is a minor bug with taking a photo of an enemy may display a completely incorrect enemy name, the correct one, or the enemy being replaced. This seems to be caused by loading in to a save that is considered to be in a dungeon and then entering a floor. It should resolve itself after loading another floor. Based on testing, enemy-based scoops will work regardless, as long as the relevant enemy spawns. Note: It seems later-game scoops such as "Faintin' Bone Lord" can only be gotten once the correct chapter is reached.
 
 ## Settings
 

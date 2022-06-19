@@ -61,6 +61,15 @@ namespace DarkCloud2_EnemyRandomizer
             enemyData = ObtainAllData();
             StoreEnemyData();
 
+            bool startedOnMainMenu = false;
+            if(Memory.ReadByte(currentDungeonAddress) == 1 && Memory.ReadByte(currentFloorAddress) == 0) // Main Menu
+            {
+                startedOnMainMenu = true;
+            }
+
+            // goal: if started on main menu: skip a randomization
+
+
             Console.WriteLine("Enemy randomizer on");
             while (true)
             {
@@ -73,10 +82,13 @@ namespace DarkCloud2_EnemyRandomizer
                         currentFloor = Memory.ReadByte(currentFloorAddress);
                         if (exitError ==  false)
                         {
-                            RandomizeEnemies();
-                            originalEnemies = false;
-                            originalNames = false;
-                            ResetEnemies(enemyData);
+                            if (startedOnMainMenu == false)
+                            {
+                                RandomizeEnemies();
+                                originalEnemies = false;
+                                originalNames = false;
+                                ResetEnemies(enemyData);
+                            }
                         }
 
                         if (currentFloor == 0)
@@ -91,6 +103,7 @@ namespace DarkCloud2_EnemyRandomizer
 
                         if (exitError == false)
                         {
+                            startedOnMainMenu = false;
                             prevFloor = currentFloor;
                         }
                     }
@@ -443,8 +456,11 @@ namespace DarkCloud2_EnemyRandomizer
             if (originalEnemies == false) // Only able to reset if the enemies have been changed
             {
                 long prevTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                while (Memory.ReadByte(0x20D06FE4) == 0) // Wait until an enemy spawns / allocates first HP address
+                int veryHigh = 0x0BEBC200;
+                Thread.Sleep(1000);
+                while (Memory.ReadByte(0x20D06FE4) == 0 || Memory.ReadByte(0x20D06FE4) > veryHigh) // Wait until an enemy spawns / allocates first HP address
                 {
+                    Console.WriteLine(Memory.ReadByte(0x20D06FE4));
                     Thread.Sleep(1);
 
                     // On boss floors no enemy will spawn, breaking monster transforms
@@ -463,6 +479,8 @@ namespace DarkCloud2_EnemyRandomizer
                         break;
                     }
                 }
+                Thread.Sleep(1000);
+                Console.WriteLine(Memory.ReadByte(0x20D06FE4));
                 Console.WriteLine("Resetting models and AI for monster transforms");
                 int currentAddress = 0x2033DA04; // Beginning of all enemy data, starts with "load position"
                 for (int i = 0; i < 280; i++)

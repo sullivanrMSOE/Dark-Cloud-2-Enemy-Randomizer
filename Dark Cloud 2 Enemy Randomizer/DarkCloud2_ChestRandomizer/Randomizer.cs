@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -29,12 +29,9 @@ namespace DarkCloud2_EnemyRandomizer
         static bool originalEnemies = true;
         static bool originalNames = true;
 
-        static int currentFloorUSA = 0x21ECD638;
-        static int currentFloorAddress;
+        static int currentFloorAddress = 0x21ECD638;
+        static int currentDungeonAddress = 0x20376638;
         static int currentFloor;
-
-        static int currentDungeonUSA = 0x20376638;
-        static int currentDungeon;
 
         static int unableToMoveAddress = 0x2037869C;
 
@@ -64,9 +61,6 @@ namespace DarkCloud2_EnemyRandomizer
             enemyData = ObtainAllData();
             StoreEnemyData();
 
-            currentFloorAddress = currentFloorUSA;
-            currentDungeon = currentDungeonUSA;
-
             Console.WriteLine("Enemy randomizer on");
             while (true)
             {
@@ -82,7 +76,6 @@ namespace DarkCloud2_EnemyRandomizer
                             RandomizeEnemies();
                             originalEnemies = false;
                             originalNames = false;
-                            Thread.Sleep(5000);
                             ResetEnemies(enemyData);
                         }
 
@@ -442,24 +435,41 @@ namespace DarkCloud2_EnemyRandomizer
 
         private static void ResetEnemies(string enemyData)
         {
-            while (Memory.ReadByte(0x2037869C) == 0)
+            while (Memory.ReadByte(0x2037869C) == 0) // 0 is open inventory/cutscene, 1 is moving
             {
                 Thread.Sleep(1);
             }
 
             if (originalEnemies == false) // Only able to reset if the enemies have been changed
             {
-                Thread.Sleep(5000);
-                Console.WriteLine("Resetting enemies except names");
-                int currentAddress = 0x2033D9E0; // Beginning of all enemy data, starts with "load position"
+                long prevTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                while (Memory.ReadByte(0x20D06FE4) == 0) // Wait until an enemy spawns / allocates first HP address
+                {
+                    Thread.Sleep(1);
+
+                    // On boss floors no enemy will spawn, breaking monster transforms
+                    // If boss floor, force wait for 5 seconds and break waiting while loop
+                    if (IsBossFloor())
+                    {
+                        Thread.Sleep(3000);
+                        break;
+                    }
+                    long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                    
+                    // If waiting longer than 5 seconds, break (In case of non-updating dungeon address)
+                    if ((currentTime - prevTime) > 5000)
+                    {
+                        Console.WriteLine("Took longer than 5 secs, exiting");
+                        break;
+                    }
+                }
+                Console.WriteLine("Resetting models and AI for monster transforms");
+                int currentAddress = 0x2033DA04; // Beginning of all enemy data, starts with "load position"
                 for (int i = 0; i < 280; i++)
                 {
-                    string name = Memory.ReadString(currentAddress + 0x00000004, 32);
-
-                    Memory.WriteString(currentAddress, enemyData.Substring(0 + (i * 184), 184));
-                    currentAddress += 0x00000004;
-                    Memory.WriteString(currentAddress, name);
-                    currentAddress += 0x000000B4;
+                    string originalModelAI = enemyData.Substring(36 + (i * 184), 40);
+                    Memory.WriteString(currentAddress, originalModelAI);
+                    currentAddress += 0x000000B8;
                 }
             }
             originalEnemies = true;
@@ -468,13 +478,99 @@ namespace DarkCloud2_EnemyRandomizer
         private static void ResetNames(string enemyData)
         {
             int currentAddress = 0x2033D9E4;
-            Console.WriteLine("Resetting names");
+            Console.WriteLine("Resetting data for monster transform names and bestiary fix");
             for (int i = 0; i < 280; i++)
             {
-                string originalName = enemyData.Substring(4+(i*184), 32);
-                //Console.WriteLine("Original name: " + originalName);
+                string originalName = enemyData.Substring(4 + (i * 184), 32);
                 Memory.WriteString(currentAddress, originalName);
-                currentAddress += 0x000000B8;
+
+                string originalFamily = enemyData.Substring(84 + (i * 184), 2);
+                currentAddress += 0x00000050; 
+                Memory.WriteString(currentAddress, originalFamily);
+
+                currentAddress += 0x00000002;
+                if (!randomABS)
+                {
+                    string originalABS = enemyData.Substring(86 + (i * 184), 2);
+                    Memory.WriteString(currentAddress, originalABS);
+                }
+
+                currentAddress += 0x00000002;
+                if (!randomGilda)
+                {
+                    string originalGilda = enemyData.Substring(88 + (i * 184), 2);
+                    Memory.WriteString(currentAddress, originalGilda);
+                }
+
+                string originalWeakness = enemyData.Substring(108 + (i * 184), 16);
+                currentAddress += 0x00000014; 
+                Memory.WriteString(currentAddress, originalWeakness);
+
+                string originalEffectiveness = enemyData.Substring(124 + (i * 184), 24);
+                currentAddress += 0x00000010; 
+                Memory.WriteString(currentAddress, originalEffectiveness);
+
+                string originalItems = enemyData.Substring(160 + (i * 184), 6);
+                currentAddress += 0x00000024;
+                Memory.WriteString(currentAddress, originalItems);
+
+                string originalHabitat = enemyData.Substring(176 + (i * 184), 2);
+                currentAddress += 0x00000010;
+                Memory.WriteString(currentAddress, originalHabitat);
+
+                string originalBestiary = enemyData.Substring(178 + (i * 184), 2);
+                currentAddress += 0x00000002;
+                Memory.WriteString(currentAddress, originalBestiary);
+
+                currentAddress += 0x0000000A; // Moving to next enemy's name
+            }
+        }
+
+        // Very bad hardcoded method to determine if the floor is a boss floor and the first HP address will not
+        // be loaded when it is done generating
+        private static bool IsBossFloor()
+        {
+            int currentDungeon = Memory.ReadByte(currentDungeonAddress);
+            int currentFloor = Memory.ReadByte(currentFloorAddress);
+            // This design is flawed, if the player moves directly to a non boss floor from the main map, the current dungeon doesn't update.
+
+            // Pump Room: 0, 4
+            // Reservoir: 0, 7
+            // Rainbow falls: 1, 15
+            // Earth gem chamber: 1, 12
+            // Barga's Valley: 2, 8
+            // Yorda's valley: 2, 18
+            // Lighthouse: 2, 23
+            // Wind gem chamber: 2, 15
+            // Ancient mural: 3, 9
+            // Shigura village: 3, 20
+            // Water gem chamber: 3, 14
+            // mt gundor peak: 4, 16
+            // mt gundor mouth: 4, 22
+            // fire gem chamber: 4, 8
+            // sirus fight?: 5, 0
+            // moonflower sun chamber: 5, 27
+            // miners breakroom: 6, 5
+            // sus opening: 6, 27
+            // dark genie: 6, 38 
+            // dead end 1: 6, 10
+            // dead end 2: 6, 16
+            // dead end 3: 6, 21
+            // dead end 4: 6, 26
+
+            if ( (currentDungeon == 0 && currentFloor == 4) || (currentDungeon == 0 && currentFloor == 7) || (currentDungeon == 1 && currentFloor == 15) || (currentDungeon == 1 && currentFloor == 12)
+                || (currentDungeon == 2 && currentFloor == 8) || (currentDungeon == 2 && currentFloor == 18) || (currentDungeon == 2 && currentFloor == 23) || (currentDungeon == 2 && currentFloor == 15) 
+                || (currentDungeon == 3 && currentFloor == 9) || (currentDungeon == 3 && currentFloor == 20) || (currentDungeon == 3 && currentFloor == 14) || (currentDungeon == 4 && currentFloor == 16) 
+                || (currentDungeon == 4 && currentFloor == 22) || (currentDungeon == 4 && currentFloor == 8) || (currentDungeon == 5 && currentFloor == 0) || (currentDungeon == 5 && currentFloor == 27) 
+                || (currentDungeon == 6 && currentFloor == 5) || (currentDungeon == 6 && currentFloor == 27) || (currentDungeon == 6 && currentFloor == 38) || (currentDungeon == 6 && currentFloor == 10) 
+                || (currentDungeon == 6 && currentFloor == 16) || (currentDungeon == 6 && currentFloor == 21) || (currentDungeon == 6 && currentFloor == 26) )
+            {
+                Console.WriteLine("Boss floor");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

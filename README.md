@@ -36,6 +36,8 @@ The options to keep the same include:
 - Weaknesses
 - Weapon Effectiveness
 - Items
+
+
 Essentially, this mod can be used to randomize every feature listed here in addition to being an enemy randomizer if desired.
 
 ## Credit

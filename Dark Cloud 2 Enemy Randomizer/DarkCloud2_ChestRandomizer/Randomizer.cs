@@ -460,18 +460,16 @@ namespace DarkCloud2_EnemyRandomizer
                 Thread.Sleep(1000);
                 while (Memory.ReadByte(0x20D06FE4) == 0 || Memory.ReadByte(0x20D06FE4) > veryHigh) // Wait until an enemy spawns / allocates first HP address
                 {
-                    Console.WriteLine(Memory.ReadByte(0x20D06FE4));
                     Thread.Sleep(1);
 
                     // On boss floors no enemy will spawn, breaking monster transforms
                     // If boss floor, force wait for 5 seconds and break waiting while loop
                     if (IsBossFloor())
                     {
-                        Thread.Sleep(3000);
                         break;
                     }
+
                     long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                    
                     // If waiting longer than 5 seconds, break (In case of non-updating dungeon address)
                     if ((currentTime - prevTime) > 5000)
                     {
@@ -479,15 +477,17 @@ namespace DarkCloud2_EnemyRandomizer
                         break;
                     }
                 }
-                Thread.Sleep(1000);
-                Console.WriteLine(Memory.ReadByte(0x20D06FE4));
-                Console.WriteLine("Resetting models and AI for monster transforms");
+                Thread.Sleep(3000);
                 int currentAddress = 0x2033DA04; // Beginning of all enemy data, starts with "load position"
-                for (int i = 0; i < 280; i++)
+                if ( !(Memory.ReadByte(currentDungeonAddress) == 0 && Memory.ReadByte(currentFloorAddress) == 7) ) // Channel Reservoir Random Monster transform easter egg
                 {
-                    string originalModelAI = enemyData.Substring(36 + (i * 184), 40);
-                    Memory.WriteString(currentAddress, originalModelAI);
-                    currentAddress += 0x000000B8;
+                    Console.WriteLine("Resetting models and AI for monster transforms");
+                    for (int i = 0; i < 280; i++)
+                    {
+                        string originalModelAI = enemyData.Substring(36 + (i * 184), 40);
+                        Memory.WriteString(currentAddress, originalModelAI);
+                        currentAddress += 0x000000B8;
+                    }
                 }
             }
             originalEnemies = true;

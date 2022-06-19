@@ -8,14 +8,14 @@ Open Dark Cloud 2 (USA) with PCSX2. Run the Enemy Randomizer executable and pres
 
 ## Information
 
-This mod writes over enemy data in memory to randomize enemies. Monica's monster transformation relies on the same data in memory that the dungeons do, so the mod reverts the data back 5 seconds after a dungeon floor is generated in order to not break her transformations. It is recommend to wait at least a few seconds before attempting to transform into a monster when first entering a floor, or the game may freeze and softlock.
-~~Additionally, the Bestiary is random and inaccurate when this mod is used.~~ Fixed
+This mod writes over enemy data in memory to randomize enemies. Monica's monster transformation relies on the same data in memory that the dungeons do, so the mod reverts the data back after a dungeon floor is generated in order to not break her transformations. It is recommend to wait at least a few seconds before attempting to transform into a monster when first entering a floor, especially on boss floors, or the game may softlock.
+~~Additionally, the Bestiary is random and inaccurate when this mod is used.~~ The bestiary is intended to be the same as vanilla and does not reflect randomization.
 
 Gemrons and Elementals rely on their position in memory in order to shoot their projectiles. In order to not break this attack, only gemrons are randomized with another gemron, and the same applies to elemental spirits. Enemies that spawn new enemies, such as Tores and Pirate Chariots (sometimes), also suffer from a similar fate. However, since their primary attack is more threatening and they each have significantly less variety, I decided not to randomize them within their own enemy type.
 
 Using save states may break the mod, and are not recommended. If the mod is closed at any point after beginning, it is recommended to reset the game before resuming the mod.
 
-Enemies maintain their resistance to being stunned, so enemies that attempt replace enemies that resist being stunned such as King Mimics may pose a substantial threat. 
+Enemies maintain their resistance to being stunned depending on the settings, so enemies that attempt replace enemies that resist being stunned such as King Mimics may pose a substantial threat. 
 
 In order to upgrade a weapon that requires certain enemies to be defeated, you must defeat the enemy that replaces the one that is usually required, ie clearing floor 1 of Mt. Gundor will mark Rifle Wolf as being defeated.
 

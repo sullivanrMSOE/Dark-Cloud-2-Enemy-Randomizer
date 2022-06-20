@@ -63,6 +63,8 @@ namespace DarkCloud2_EnemyRandomizer
             prevFloor = -1;
 
             Console.WriteLine("Enemy randomizer on");
+            MainMenuCheck();
+            
             while (true)
             {
                 if (Memory.ReadByte(currentFloorAddress) > 0)
@@ -576,6 +578,18 @@ namespace DarkCloud2_EnemyRandomizer
             else
             {
                 return false;
+            }
+        }
+
+        private static void MainMenuCheck()
+        {
+            if (Memory.ReadByte(currentDungeonAddress) == 1 && Memory.ReadByte(currentFloorAddress) == 0)
+            {
+                Console.WriteLine("Mod started on the main menu.");
+                while (Memory.ReadByte(currentDungeonAddress) == 1 && Memory.ReadByte(currentFloorAddress) == 0) // Main Menu
+                {
+                    Thread.Sleep(1);
+                }
             }
         }
     }

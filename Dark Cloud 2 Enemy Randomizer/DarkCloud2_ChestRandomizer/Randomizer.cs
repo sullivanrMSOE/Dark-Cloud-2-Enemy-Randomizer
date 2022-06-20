@@ -496,14 +496,14 @@ namespace DarkCloud2_EnemyRandomizer
                 Memory.WriteString(currentAddress, originalFamily);
 
                 currentAddress += 0x00000002;
-                if (!randomABS)
+                if (randomABS)
                 {
                     string originalABS = enemyData.Substring(86 + (i * 184), 2);
                     Memory.WriteString(currentAddress, originalABS);
                 }
 
                 currentAddress += 0x00000002;
-                if (!randomGilda)
+                if (randomGilda)
                 {
                     string originalGilda = enemyData.Substring(88 + (i * 184), 2);
                     Memory.WriteString(currentAddress, originalGilda);

@@ -1,4 +1,4 @@
-﻿
+
 namespace DarkCloud2_EnemyRandomizer
 {
     partial class Form1
@@ -100,131 +100,138 @@ namespace DarkCloud2_EnemyRandomizer
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(18, 199);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(96, 17);
             this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "Original Enemy";
+            this.checkBox1.Text = "Randomize Enemy";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox2.Location = new System.Drawing.Point(18, 222);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(95, 17);
             this.checkBox2.TabIndex = 6;
-            this.checkBox2.Text = "Original Sound";
+            this.checkBox2.Text = "Randomize Sound";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Checked = false;
             this.checkBox3.Location = new System.Drawing.Point(18, 245);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(79, 17);
             this.checkBox3.TabIndex = 7;
-            this.checkBox3.Text = "Original HP";
+            this.checkBox3.Text = "Randomize HP";
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.Checked = false;
             this.checkBox4.Location = new System.Drawing.Point(18, 268);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(85, 17);
             this.checkBox4.TabIndex = 8;
-            this.checkBox4.Text = "Original ABS";
+            this.checkBox4.Text = "Randomize ABS";
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // checkBox5
             // 
             this.checkBox5.AutoSize = true;
-            this.checkBox5.Checked = true;
-            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox5.Checked = false;
             this.checkBox5.Location = new System.Drawing.Point(18, 291);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(88, 17);
             this.checkBox5.TabIndex = 9;
-            this.checkBox5.Text = "Original Gilda";
+            this.checkBox5.Text = "Randomize Gilda";
             this.checkBox5.UseVisualStyleBackColor = true;
             this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // checkBox6
             // 
             this.checkBox6.AutoSize = true;
+            this.checkBox6.Checked = true;
+            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox6.Location = new System.Drawing.Point(18, 314);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(130, 17);
             this.checkBox6.TabIndex = 10;
-            this.checkBox6.Text = "Original Rage Counter";
+            this.checkBox6.Text = "Randomize Rage Counter";
             this.checkBox6.UseVisualStyleBackColor = true;
             this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
             // 
             // checkBox7
             // 
             this.checkBox7.AutoSize = true;
-            this.checkBox7.Checked = true;
-            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox7.Checked = false;
             this.checkBox7.Location = new System.Drawing.Point(18, 337);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(95, 17);
             this.checkBox7.TabIndex = 11;
-            this.checkBox7.Text = "Original Attack";
+            this.checkBox7.Text = "Randomize Attack";
             this.checkBox7.UseVisualStyleBackColor = true;
             this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
             // 
             // checkBox8
             // 
             this.checkBox8.AutoSize = true;
-            this.checkBox8.Checked = true;
-            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox8.Checked = false;
             this.checkBox8.Location = new System.Drawing.Point(18, 360);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(104, 17);
             this.checkBox8.TabIndex = 12;
-            this.checkBox8.Text = "Original Defense";
+            this.checkBox8.Text = "Randomize Defense";
             this.checkBox8.UseVisualStyleBackColor = true;
             this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
             // 
             // checkBox9
             // 
             this.checkBox9.AutoSize = true;
+            this.checkBox9.Checked = true;
+            this.checkBox9.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox9.Location = new System.Drawing.Point(18, 383);
             this.checkBox9.Name = "checkBox9";
             this.checkBox9.Size = new System.Drawing.Size(126, 17);
             this.checkBox9.TabIndex = 13;
-            this.checkBox9.Text = "Original Weaknesses";
+            this.checkBox9.Text = "Randomize Weaknesses";
             this.checkBox9.UseVisualStyleBackColor = true;
             this.checkBox9.CheckedChanged += new System.EventHandler(this.checkBox9_CheckedChanged);
             // 
             // checkBox10
             // 
             this.checkBox10.AutoSize = true;
+            this.checkBox10.Checked = true;
+            this.checkBox10.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox10.Location = new System.Drawing.Point(18, 406);
             this.checkBox10.Name = "checkBox10";
             this.checkBox10.Size = new System.Drawing.Size(172, 17);
             this.checkBox10.TabIndex = 14;
-            this.checkBox10.Text = "Original Weapon Effectiveness";
+            this.checkBox10.Text = "Randomize Weapon Effectiveness";
             this.checkBox10.UseVisualStyleBackColor = true;
             this.checkBox10.CheckedChanged += new System.EventHandler(this.checkBox10_CheckedChanged);
             // 
             // checkBox11
             // 
             this.checkBox11.AutoSize = true;
+            this.checkBox11.Checked = true;
+            this.checkBox11.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox11.Location = new System.Drawing.Point(18, 429);
             this.checkBox11.Name = "checkBox11";
             this.checkBox11.Size = new System.Drawing.Size(108, 17);
             this.checkBox11.TabIndex = 15;
-            this.checkBox11.Text = "Original Item Loot";
+            this.checkBox11.Text = "Randomize Item Loot";
             this.checkBox11.UseVisualStyleBackColor = true;
             this.checkBox11.CheckedChanged += new System.EventHandler(this.checkBox11_CheckedChanged);
             // 
@@ -252,7 +259,7 @@ namespace DarkCloud2_EnemyRandomizer
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(204, 29);
             this.label7.TabIndex = 18;
-            this.label7.Text = "Select attributes to remain the same for enemies:";
+            this.label7.Text = "Select attributes to randomize:";
             // 
             // Form1
             // 

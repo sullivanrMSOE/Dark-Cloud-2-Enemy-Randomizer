@@ -60,35 +60,23 @@ namespace DarkCloud2_EnemyRandomizer
 
             enemyData = ObtainAllData();
             StoreEnemyData();
-
-            bool startedOnMainMenu = false;
-            if(Memory.ReadByte(currentDungeonAddress) == 1 && Memory.ReadByte(currentFloorAddress) == 0) // Main Menu
-            {
-                startedOnMainMenu = true;
-            }
-
-            // goal: if started on main menu: skip a randomization
-
+            prevFloor = -1;
 
             Console.WriteLine("Enemy randomizer on");
             while (true)
             {
                 if (Memory.ReadByte(currentFloorAddress) > 0)
                 {
-                    //Console.WriteLine("old floor");
                     if (Memory.ReadByte(currentFloorAddress) != prevFloor) // New Floor
                     {
                         Console.WriteLine("New floor");
                         currentFloor = Memory.ReadByte(currentFloorAddress);
                         if (exitError ==  false)
                         {
-                            if (startedOnMainMenu == false)
-                            {
-                                RandomizeEnemies();
-                                originalEnemies = false;
-                                originalNames = false;
-                                ResetEnemies(enemyData);
-                            }
+                            RandomizeEnemies();
+                            originalEnemies = false;
+                            originalNames = false;
+                            ResetEnemies(enemyData);
                         }
 
                         if (currentFloor == 0)
@@ -103,7 +91,6 @@ namespace DarkCloud2_EnemyRandomizer
 
                         if (exitError == false)
                         {
-                            startedOnMainMenu = false;
                             prevFloor = currentFloor;
                         }
                     }
@@ -135,7 +122,7 @@ namespace DarkCloud2_EnemyRandomizer
                 }
                 else
                 {
-                    prevFloor = 200;
+                    prevFloor = -1;
                 }
 
                 if (gameVersion == 1)
@@ -306,94 +293,94 @@ namespace DarkCloud2_EnemyRandomizer
 
         private static int WriteRandomEnemyData(string[] completeEnemy, int currentAddress)
         {
-            if (!randomEnemies)
+            if (randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[0]); // Name, Model, AI
             }
             currentAddress += 0x00000044;
-            if (!randomSound)
+            if (randomSound)
             {
                 Memory.WriteString(currentAddress, completeEnemy[1]); // Sound. It's funny to have incorrect noises
             }
             currentAddress += 0x00000004;
-            if(!randomEnemies)
+            if(randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[2]); // Writing an unknown value...
             }
             currentAddress += 0x00000004;
-            if (!randomHP)
+            if (randomHP)
             {
                 Memory.WriteString(currentAddress, completeEnemy[3]); // HP
             }
             currentAddress += 0x00000004;
-            if (!randomEnemies)
+            if (randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[4]); // Enemy family
             }
             currentAddress += 0x00000002;
-            if (!randomABS)
+            if (randomABS)
             {
                 Memory.WriteString(currentAddress, completeEnemy[5]); // ABS Dropped
             }
             currentAddress += 0x00000002;
-            if (!randomGilda)
+            if (randomGilda)
             {
                 Memory.WriteString(currentAddress, completeEnemy[6]); // Gilda Dropped
             }
             currentAddress += 0x00000002;
-            if (!randomEnemies)
+            if (randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[7]); // Writing an unknown value...
             }
             currentAddress += 0x00000006;
-            if (!randomRage)
+            if (randomRage)
             {
                 Memory.WriteString(currentAddress, completeEnemy[8]); // Rage Counter
             }
             currentAddress += 0x00000002;
-            if (!randomEnemies)
+            if (randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[9]); // Writing an unknown value...
             }
             currentAddress += 0x00000004;
-            if (!randomDamage)
+            if (randomDamage)
             {
                 Memory.WriteString(currentAddress, completeEnemy[10]); // Attack
             }
             currentAddress += 0x00000002;
-            if (!randomDefense)
+            if (randomDefense)
             {
                 Memory.WriteString(currentAddress, completeEnemy[11]); // Defense
             }
             currentAddress += 0x00000002;
             Memory.WriteUShort(currentAddress, 0); // Not-Boss Flag
             currentAddress += 0x00000002;
-            if (!randomWeaknesses)
+            if (randomWeaknesses)
             {
                 Memory.WriteString(currentAddress, completeEnemy[13]); // Weaknesses
             }
             currentAddress += 0x00000010;
-            if (!randomEffectiveness)
+            if (randomEffectiveness)
             {
                 Memory.WriteString(currentAddress, completeEnemy[14]); // Weapon Effectiveness
             }
             currentAddress += 0x00000018;
-            if (!randomEnemies)
+            if (randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[15]); // Writing an unknown value...
             }
             currentAddress += 0x0000000C;
-            if (!randomItems)
+            if (randomItems)
             {
                 Memory.WriteString(currentAddress, completeEnemy[16]); // Items
             }
             currentAddress += 0x00000006;
-            if (!randomEnemies)
+            if (randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[17]); // Writing an unknown value...
             }
             currentAddress += 0x0000000A;
-            if (!randomEnemies)
+            if (randomEnemies)
             {
                 Memory.WriteString(currentAddress, completeEnemy[18]); // Habitat
                 currentAddress += 0x00000002;

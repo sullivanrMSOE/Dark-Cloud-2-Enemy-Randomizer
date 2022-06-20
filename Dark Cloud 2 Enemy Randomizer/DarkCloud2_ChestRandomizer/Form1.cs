@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,18 +13,17 @@ namespace DarkCloud2_EnemyRandomizer
 {
     public partial class Form1 : Form
     {
-        static bool randomEnemiesChoice = false;
-        static bool randomSoundChoice = false;
-        static bool randomHPChoice = true;
-        static bool randomDefenseChoice = true;
-        static bool randomABSChoice = true;
-        static bool randomGildaChoice = true;
-        static bool randomRageChoice = false;
-        static bool randomWeaknessesChoice = false;
-        static bool randomEffectivenessChoice = false;
-        static bool randomItemsChoice = false;
-        static bool randomAttackChoice = true;
-        static bool skipGemronsAndElementalsChoice = false;
+        static bool randomEnemiesChoice = true;
+        static bool randomSoundChoice = true;
+        static bool randomHPChoice = false;
+        static bool randomABSChoice = false;
+        static bool randomGildaChoice = false;
+        static bool randomRageChoice = true;
+        static bool randomAttackChoice = false;
+        static bool randomDefenseChoice = false;
+        static bool randomWeaknessesChoice = true;
+        static bool randomEffectivenessChoice = true;
+        static bool randomItemsChoice = true;
 
         public bool gameCheck = false;
         public static bool versionCheck;

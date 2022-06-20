@@ -67,8 +67,8 @@ namespace DarkCloud2_EnemyRandomizer
         private void button1_Click(object sender, EventArgs e)
         {
             // if every choice is true, reject begin
-            if(randomEnemiesChoice && randomSoundChoice && randomHPChoice && randomDefenseChoice && randomAttackChoice && randomABSChoice 
-                && randomGildaChoice && randomRageChoice && randomWeaknessesChoice && randomEffectivenessChoice && randomItemsChoice)
+            if(!randomEnemiesChoice && !randomSoundChoice && !randomHPChoice && !randomDefenseChoice && !randomAttackChoice && !randomABSChoice 
+                && !randomGildaChoice && !randomRageChoice && !randomWeaknessesChoice && !randomEffectivenessChoice && !randomItemsChoice)
             {
                 MessageBox.Show("If you're going to disable all randomization, why are you running this mod?", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
